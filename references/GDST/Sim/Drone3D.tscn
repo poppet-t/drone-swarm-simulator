@@ -1,0 +1,62 @@
+[gd_scene load_steps=8 format=3 uid="uid://bh5kbf4347swy"]
+
+[ext_resource type="Script" path="res://Sim/Scripts/Drone/Drone3D.gd" id="1_30i40"]
+[ext_resource type="Shader" path="res://Sim/Shaders/Drone3D.gdshader" id="2_5kb5s"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_58p2w"]
+render_priority = 0
+shader = ExtResource("2_5kb5s")
+
+[sub_resource type="SphereMesh" id="SphereMesh_glukx"]
+material = SubResource("ShaderMaterial_58p2w")
+radius = 0.15
+height = 0.3
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_58auw"]
+render_priority = 0
+shader = ExtResource("2_5kb5s")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_86j3p"]
+radius = 0.15
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_4lgxu"]
+radius = 2.58473
+
+[node name="Drone3D" type="RigidBody3D"]
+collision_layer = 2
+collision_mask = 0
+gravity_scale = 0.0
+can_sleep = false
+lock_rotation = true
+script = ExtResource("1_30i40")
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+instance_shader_parameters/color = Color(0.05, 0.05, 0.05, 1)
+mesh = SubResource("SphereMesh_glukx")
+surface_material_override/0 = SubResource("ShaderMaterial_58auw")
+
+[node name="Collision" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_86j3p")
+
+[node name="Detection" type="Area3D" parent="."]
+visible = false
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Detection"]
+shape = SubResource("SphereShape3D_4lgxu")
+
+[node name="Visualization" type="Node3D" parent="."]
+visible = false
+
+[node name="LabelID" type="Label3D" parent="."]
+transform = Transform3D(0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, 0, 0, 0)
+billboard = 1
+double_sided = false
+no_depth_test = true
+texture_filter = 1
+render_priority = 10
+outline_render_priority = 9
+text = "0"
+font_size = 64
+outline_size = 24
