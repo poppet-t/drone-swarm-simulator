@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://0t5dvqd18l7i"]
+
+[sub_resource type="Environment" id="Environment_b57x4"]
+background_mode = 1
+background_color = Color(0.29447016, 0.31241086, 0.8903918, 1)
+background_energy_multiplier = 3.04
+ambient_light_source = 2
+ambient_light_energy = 0.4
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gs16m"]
+albedo_color = Color(0.47058824, 0.61960787, 0.23921569, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_b57x4"]
+size = Vector2(40, 40)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nmpo4"]
+size = Vector3(40, 0.2, 40)
+
+[node name="Main" type="Node3D" unique_id=173881472]
+
+[node name="MainCamera" type="Camera3D" parent="." unique_id=1937821827]
+transform = Transform3D(0.70710677, -0.35355338, 0.6123724, 0, 0.8660254, 0.5, -0.70710677, -0.35355338, 0.6123724, 10, 8, 10)
+current = true
+
+[node name="Sun" type="DirectionalLight3D" parent="." unique_id=541709677]
+transform = Transform3D(0.8660254, 0.38302222, -0.32139382, 0, 0.64278764, 0.76604444, 0.5, -0.66341394, 0.5566704, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Environment" type="WorldEnvironment" parent="." unique_id=759830626]
+environment = SubResource("Environment_b57x4")
+
+[node name="Ground" type="StaticBody3D" parent="." unique_id=782815451]
+
+[node name="GroundMesh" type="MeshInstance3D" parent="Ground" unique_id=1533565995]
+material_override = SubResource("StandardMaterial3D_gs16m")
+mesh = SubResource("PlaneMesh_b57x4")
+
+[node name="GroundCollision" type="CollisionShape3D" parent="Ground" unique_id=763908594]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+shape = SubResource("BoxShape3D_nmpo4")
