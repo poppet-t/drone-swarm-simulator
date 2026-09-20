@@ -1,0 +1,37 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://src/render/sim_view.gd" id="1_simview"]
+[ext_resource type="Script" path="res://Sim/Scripts/CamControls.gd" id="2_cam"]
+[ext_resource type="PackedScene" path="res://scenes/visuals/drone_visual_textured.tscn" id="3_drone_visual"]
+
+[sub_resource type="Environment" id="Environment_main"]
+background_mode = 1
+background_color = Color(0.29447016, 0.31241086, 0.8903918, 1)
+background_energy_multiplier = 1.0
+ambient_light_source = 2
+ambient_light_energy = 0.4
+
+[node name="SimMain" type="Node3D"]
+script = ExtResource("1_simview")
+drone_visual_scene = ExtResource("3_drone_visual")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.70710677, -0.35355338, 0.6123724, 0, 0.8660254, 0.5, -0.70710677, -0.35355338, 0.6123724, 0, 16, 20)
+far = 400.0
+script = ExtResource("2_cam")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.8660254, 0.38302222, -0.32139382, 0, 0.64278764, 0.76604444, 0.5, -0.66341394, 0.5566704, 0, 10, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_main")
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="Label" type="Label" parent="HUD"]
+offsets/left = 10.0
+offsets/top = 10.0
+offsets/right = 700.0
+offsets/bottom = 60.0
+text = "drone-swarm-sim"

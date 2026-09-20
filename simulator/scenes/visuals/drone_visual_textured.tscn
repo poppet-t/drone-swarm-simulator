@@ -1,0 +1,49 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://src/render/drone_visual_textured.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://assets/models/drone/drone_model.glb" id="2_model"]
+[ext_resource type="Shader" path="res://src/render/emissive_marker.gdshader" id="3_shader"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_marker"]
+shader = ExtResource("3_shader")
+
+[sub_resource type="SphereMesh" id="SphereMesh_marker"]
+radius = 0.035
+height = 0.07
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_selection"]
+shader = ExtResource("3_shader")
+
+[sub_resource type="TorusMesh" id="TorusMesh_selection"]
+inner_radius = 0.22
+outer_radius = 0.27
+
+[node name="DroneVisualTextured" type="Node3D"]
+script = ExtResource("1_script")
+
+[node name="ModelRoot" type="Node3D" parent="."]
+
+[node name="ImportedDroneModel" parent="ModelRoot" instance=ExtResource("2_model")]
+
+[node name="IdMarker" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.06, 0)
+mesh = SubResource("SphereMesh_marker")
+surface_material_override/0 = SubResource("ShaderMaterial_marker")
+
+[node name="SelectionIndicator" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+visible = false
+mesh = SubResource("TorusMesh_selection")
+surface_material_override/0 = SubResource("ShaderMaterial_selection")
+
+[node name="DebugLabel" type="Label3D" parent="."]
+transform = Transform3D(0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, 0, 0.4, 0)
+billboard = 1
+double_sided = false
+no_depth_test = true
+texture_filter = 1
+render_priority = 10
+outline_render_priority = 9
+text = "0"
+font_size = 64
+outline_size = 24

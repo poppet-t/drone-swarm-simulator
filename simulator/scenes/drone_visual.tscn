@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://src/render/drone_visual.gd" id="1_visual"]
+[ext_resource type="Shader" path="res://Sim/Shaders/Drone3D.gdshader" id="2_shader"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_visual"]
+render_priority = 0
+shader = ExtResource("2_shader")
+
+[sub_resource type="SphereMesh" id="SphereMesh_visual"]
+material = SubResource("ShaderMaterial_visual")
+radius = 0.15
+height = 0.3
+
+[node name="DroneVisual" type="Node3D"]
+script = ExtResource("1_visual")
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+instance_shader_parameters/color = Color(0.05, 0.05, 0.05, 1)
+mesh = SubResource("SphereMesh_visual")
+surface_material_override/0 = SubResource("ShaderMaterial_visual")
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, 0, 0.4, 0)
+billboard = 1
+double_sided = false
+no_depth_test = true
+texture_filter = 1
+render_priority = 10
+outline_render_priority = 9
+text = "0"
+font_size = 64
+outline_size = 24
